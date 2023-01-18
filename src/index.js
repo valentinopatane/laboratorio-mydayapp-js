@@ -1,26 +1,36 @@
 import "./css/base.css";
-import addTask from "./js/addTask";
-import countItems from "./js/countItems";
-import createChild from "./js/createChild";
-import deleteCompleted from "./js/deleteCompleted";
+import Tasks from "./js/Tasks";
+import { isSent } from "./js/utils";
 
-//--------------------- Hide main & footer
+const TasksService = new Tasks();
 
-const tasks = JSON.parse(localStorage.getItem("mydayapp-js")) || [];
-const mainSection = document.querySelector(".main");
-const footerSection = document.querySelector(".footer");
-console.log(JSON.stringify(tasks));
-if (tasks.length != 0) {
-  tasks.forEach((t) => {
-    createChild(t);
-  });
-  countItems(tasks);
-} else {
-  mainSection.style.display = "none";
-  footerSection.style.display = "none";
-}
+// ----------------- Get Tasks
+TasksService.getTasks();
 
-// -----------------
+// ----------------- Add Task
 
-addTask({ tasks, mainSection, footerSection });
-deleteCompleted(tasks);
+const inputTask = document.querySelector(".new-todo");
+
+inputTask.autofocus;
+
+inputTask.addEventListener("keyup", (e) => {
+  const newTask = {
+    id: Date.now(),
+    title: e.target.value.trim(),
+    completed: false,
+  };
+
+  const enterPressed = isSent(e);
+  if (enterPressed && e.target.value != "") {
+    TasksService.addTask(newTask);
+    e.target.value = "";
+  }
+});
+
+// ----------------- Delete completed tasks
+
+const deleteButton = document.querySelector(".clear-completed");
+
+deleteButton.addEventListener("click", () => {
+  TasksService.deleteCompleted();
+});
