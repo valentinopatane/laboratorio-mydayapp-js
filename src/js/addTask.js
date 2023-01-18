@@ -24,7 +24,7 @@ const addTask = ({ tasks, mainSection, footerSection }) => {
         footerSection.style.display = "block";
       }
 
-      createChild(newTask, tasks);
+      createChild(newTask);
       countItems(tasks);
       e.target.value = "";
     }

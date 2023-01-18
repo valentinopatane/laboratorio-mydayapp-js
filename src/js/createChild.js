@@ -2,7 +2,7 @@ import countItems from "./countItems";
 import editTask from "./editTask";
 import { getElement } from "./utils";
 
-const createChild = (t, tasks) => {
+const createChild = (t) => {
   const ul = document.querySelector(".todo-list");
   let li = document.createElement("li");
 
@@ -25,10 +25,8 @@ const createChild = (t, tasks) => {
     t.completed = !t.completed;
     if (t.completed) {
       li.classList.add("completed");
-      countItems(tasks);
     } else {
       li.classList.remove("completed");
-      countItems(tasks);
     }
   });
 

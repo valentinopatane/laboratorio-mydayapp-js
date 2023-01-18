@@ -1,6 +1,7 @@
 import "./css/base.css";
 import addTask from "./js/addTask";
 import createChild from "./js/createChild";
+import deleteCompleted from "./js/deleteCompleted";
 
 //--------------------- Hide main & footer
 
@@ -21,3 +22,4 @@ if (tasks.length != 0) {
 // -----------------
 
 addTask({ tasks, mainSection, footerSection });
+deleteCompleted(tasks);
