@@ -1,3 +1,4 @@
+import countItems from "./countItems";
 import createChild from "./createChild";
 
 const deleteCompleted = (tasks) => {
@@ -11,6 +12,8 @@ const deleteCompleted = (tasks) => {
       createChild(t);
     });
     tasks.splice(0, tasks.length, ...notCompleted);
+    localStorage.setItem("mydayapp-js", JSON.stringify(tasks));
+    countItems(tasks);
   });
 };
 export default deleteCompleted;

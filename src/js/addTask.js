@@ -27,6 +27,7 @@ const addTask = ({ tasks, mainSection, footerSection }) => {
       createChild(newTask);
       countItems(tasks);
       e.target.value = "";
+      localStorage.setItem("mydayapp-js", JSON.stringify(tasks));
     }
   });
 };
