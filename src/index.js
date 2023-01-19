@@ -5,6 +5,7 @@ import { isSent } from "./js/utils";
 const TasksService = new Tasks();
 
 // ----------------- Get Tasks
+
 TasksService.getTasks();
 
 // ----------------- Add Task
@@ -33,4 +34,19 @@ const deleteButton = document.querySelector(".clear-completed");
 
 deleteButton.addEventListener("click", () => {
   TasksService.deleteCompleted();
+});
+
+// ----------------- Filters
+
+const filters = document.querySelectorAll(".filter");
+
+filters.forEach((filter) => {
+  filter.addEventListener("click", (e) => {
+    filters.forEach((f) => f.classList.remove("selected"));
+    e.target.classList.add("selected");
+  });
+});
+
+window.addEventListener("hashchange", (e) => {
+  TasksService.filterCategories();
 });

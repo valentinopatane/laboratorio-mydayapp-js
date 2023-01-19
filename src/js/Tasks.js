@@ -1,4 +1,4 @@
-import { findIndex, isSent } from "./utils";
+import { drawList, findIndex, isSent } from "./utils";
 
 class Tasks {
   constructor() {
@@ -49,29 +49,17 @@ class Tasks {
     const checkTasks = this.checkTasks();
     if (checkTasks) this.getCount();
 
-    const ul = document.querySelector(".todo-list");
-    ul.innerHTML = "";
-    this.tasks.map((task) => {
-      let li = document.createElement("li");
+    const cat = location.hash;
 
-      li.innerHTML = `
-                  <li class="${task.completed ? "completed" : null}">
-                      <div class="view" id="${task.id}">
-                          <input class="toggle" type="checkbox" id="${
-                            task.id
-                          }" ${task.completed ? "checked" : ""}/>
-                          <label class ="label" id="${task.id}">${
-        task.title
-      }</label>
-                          <button class="destroy" id="${task.id}"></button>
-                      </div>
-                      <input class="edit" value="${task.title}" id="${
-        task.id
-      }" />
-                  </li>`;
-
-      ul.appendChild(li);
-    });
+    if (cat == "#/pending") {
+      const notCompleted = this.tasks.filter((t) => t.completed == false);
+      drawList(notCompleted);
+    } else if (cat == "#/completed") {
+      const completed = this.tasks.filter((t) => t.completed == true);
+      drawList(completed);
+    } else {
+      drawList(this.tasks);
+    }
 
     this.checkBoxes();
     this.labels();
@@ -135,6 +123,9 @@ class Tasks {
         });
       }
     });
+  }
+  filterCategories() {
+    this.getTasks();
   }
 }
 export default Tasks;
