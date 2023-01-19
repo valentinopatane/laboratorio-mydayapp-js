@@ -45,6 +45,14 @@ class Tasks {
       });
     });
   }
+  destroys() {
+    const deleteButtons = document.querySelectorAll(".destroy");
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        this.deleteTask(e.target.id);
+      });
+    });
+  }
   getTasks() {
     const checkTasks = this.checkTasks();
     if (checkTasks) this.getCount();
@@ -63,6 +71,7 @@ class Tasks {
 
     this.checkBoxes();
     this.labels();
+    this.destroys();
 
     return this.tasks;
   }
@@ -124,7 +133,10 @@ class Tasks {
       }
     });
   }
-  filterCategories() {
+  deleteTask(taskId) {
+    const updatedTasks = this.tasks.filter((t) => t.id != taskId);
+    this.tasks = updatedTasks;
+    localStorage.setItem("mydayapp-js", JSON.stringify(this.tasks));
     this.getTasks();
   }
 }

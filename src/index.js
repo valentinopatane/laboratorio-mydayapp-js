@@ -41,12 +41,20 @@ deleteButton.addEventListener("click", () => {
 const filters = document.querySelectorAll(".filter");
 
 filters.forEach((filter) => {
+  if (location.hash.slice(2) == filter.text.toLowerCase()) {
+    filter.classList.add("selected");
+  } else if (location.hash == "#/" || location.hash == "") {
+    filters[0].classList.add("selected");
+  }
+
   filter.addEventListener("click", (e) => {
     filters.forEach((f) => f.classList.remove("selected"));
     e.target.classList.add("selected");
   });
 });
 
-window.addEventListener("hashchange", (e) => {
-  TasksService.filterCategories();
+window.addEventListener("hashchange", () => {
+  TasksService.getTasks();
 });
+
+// ----------------- Delete Button
